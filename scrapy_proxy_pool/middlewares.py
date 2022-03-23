@@ -81,7 +81,8 @@ class ProxyPoolMiddleware(object):
             raise NotConfigured()
 
         filters = dict()
-        filters['anonymous'] = s.getbool('PROXY_POOL_FILTER_ANONYMOUS', False)
+        # proxyscrape issue: None instead of False is expected
+        filters['anonymous'] = s.getbool('PROXY_POOL_FILTER_ANONYMOUS', False) or None 
         filters['type'] = s.get('PROXY_POOL_FILTER_TYPES', ['http', 'https'])
         filters['code'] = s.get('PROXY_POOL_FILTER_CODE', 'us')
 
